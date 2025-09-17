@@ -8,6 +8,7 @@
   :root{
     --bg:#0b0e13; --card:#121826; --ink:#e8eefc; --muted:#9fb0d1;
     --accent:#6aa5ff; --accent2:#7ef2c3; --grid:#1c2538;
+    --w:#9ad0ff; --l:#86f7c8; --i:#ffd28a; --a:#c7a2ff;
   }
   *{box-sizing:border-box}
   body{
@@ -24,13 +25,17 @@
   .sub{color:var(--muted)}
   .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,3vw,24px) 64px}
 
-  /* Controles */
-  .controls{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 14px}
+  /* Controles + Leyenda */
+  .controls{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 10px}
   input[type="search"], select, button{
     background:var(--card); border:1px solid #22304b; color:var(--ink);
     padding:10px 12px; border-radius:12px;
   }
   button{cursor:pointer; font-weight:600}
+  .legend{display:flex; flex-wrap:wrap; gap:12px; margin:6px 0 16px}
+  .lg{display:flex; align-items:center; gap:8px; color:var(--muted); background:#121a2b; border:1px solid #22304b; padding:6px 10px; border-radius:999px; font-weight:600}
+  .dot{width:10px; height:10px; border-radius:50%}
+  .dw{background:var(--w)} .dl{background:var(--l)} .di{background:var(--i)} .da{background:var(--a)}
 
   /* Tabla */
   .table{width:100%; border-collapse:collapse; background:var(--card);
@@ -45,12 +50,15 @@
   tbody tr:hover{background:#162039}
   tbody th{width:90px; color:#cde0ff; font-weight:800}
 
-  .os{display:grid; gap:6px}
-  .note{color:var(--muted); font-size:.92rem}
+  /* Bloques por SO dentro de la celda */
+  .stack{display:grid; gap:10px}
+  .entry{background:#0f1524; border:1px solid #22304b; border-radius:12px; padding:10px 12px}
+  .head{display:flex; align-items:center; gap:10px; font-weight:800}
   .tag{display:inline-block; padding:2px 8px; border-radius:999px; font-size:.78rem; font-weight:700; color:#0b0e13; border:1px solid rgba(255,255,255,.12)}
-  .w{background:#9ad0ff} .l{background:#86f7c8} .i{background:#ffd28a} .a{background:#c7a2ff}
+  .w{background:var(--w)} .l{background:var(--l)} .i{background:var(--i)} .a{background:var(--a)}
+  .note{color:var(--muted); font-size:.92rem}
 
-  footer{text-align:center; color:#6f82a7; font-size:.88rem; margin:26px 0 48px}
+  footer{text-align:center; color:#6f82a7; font-size:.88rem; margin: 26px 0 48px}
 </style>
 </head>
 <body>
@@ -62,7 +70,7 @@
 <div class="wrap">
   <!-- Controles -->
   <div class="controls">
-    <input id="q" type="search" placeholder="Buscar (ej. 'Windows 7', 'kernel 5.0', 'iOS 12', 'Android 9 Pie')">
+    <input id="q" type="search" placeholder="Buscar (ej. 'Windows 7', 'kernel 6.x', 'iOS 12', 'Android 10')">
     <select id="sort">
       <option value="asc">Ordenar por año ↑</option>
       <option value="desc">Ordenar por año ↓</option>
@@ -70,212 +78,423 @@
     <button id="reset">Limpiar</button>
   </div>
 
-  <!-- Tabla -->
+  <!-- Leyenda -->
+  <div class="legend">
+    <span class="lg"><span class="dot dw"></span> Windows</span>
+    <span class="lg"><span class="dot dl"></span> Linux (kernel)</span>
+    <span class="lg"><span class="dot di"></span> iOS</span>
+    <span class="lg"><span class="dot da"></span> Android</span>
+  </div>
+
+  <!-- Tabla unificada: Año + Sistema Operativo -->
   <table class="table" id="timeline">
     <thead>
-      <tr><th>Año</th><th>Windows</th><th>Linux (kernel)</th><th>iOS</th><th>Android</th></tr>
+      <tr><th>Año</th><th>Sistema Operativo</th></tr>
     </thead>
     <tbody>
       <!-- 1980s–1990s -->
       <tr data-year="1985">
         <th>1985</th>
-        <td class="os"><span class="tag w">Windows 1.0</span><div class="note">Primer Windows (20-nov-1985).</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 1.0</span></div>
+              <div class="note">Primer Windows (20-nov-1985), entorno gráfico sobre MS-DOS. :contentReference[oaicite:0]{index=0}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1987">
         <th>1987</th>
-        <td class="os"><span class="tag w">Windows 2.0</span><div class="note">Ventanas superpuestas, mejoras UI.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 2.0</span></div>
+              <div class="note">Ventanas superpuestas; mejoras de interfaz. :contentReference[oaicite:1]{index=1}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1990">
         <th>1990</th>
-        <td class="os"><span class="tag w">Windows 3.0</span><div class="note">Populariza la GUI, mejor memoria.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 3.0</span></div>
+              <div class="note">Populariza la GUI; mejor gestión de memoria. :contentReference[oaicite:2]{index=2}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1991">
         <th>1991</th>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><span class="tag l">Linux 0.01</span><div class="note">Primera publicación (sept-1991).</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 0.01</span></div>
+              <div class="note">Primera publicación (sept-1991). :contentReference[oaicite:3]{index=3}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1992">
         <th>1992</th>
-        <td class="os"><span class="tag w">Windows 3.1</span><div class="note">TrueType, WfW 3.11 (1993).</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 3.1</span></div>
+              <div class="note">TrueType; WfW 3.11 (1993) con redes. :contentReference[oaicite:4]{index=4}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1993">
         <th>1993</th>
-        <td class="os"><span class="tag w">Windows NT 3.1</span><div class="note">Arranca la línea NT (32-bit).</div></td>
-        <td class="os"><div class="note">Distros tempranas: Slackware/Debian.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows NT 3.1</span></div>
+              <div class="note">Inicio de la línea NT de 32-bit. :contentReference[oaicite:5]{index=5}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1994">
         <th>1994</th>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><span class="tag l">Linux 1.0</span><div class="note">Primer kernel estable.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 1.0</span></div>
+              <div class="note">Primer kernel estable. :contentReference[oaicite:6]{index=6}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1995">
         <th>1995</th>
-        <td class="os"><span class="tag w">Windows 95</span><div class="note">Menú Inicio, barra de tareas, PnP.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 95</span></div>
+              <div class="note">Menú Inicio, barra de tareas, PnP. :contentReference[oaicite:7]{index=7}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1996">
         <th>1996</th>
-        <td class="os"><span class="tag w">Windows NT 4.0</span><div class="note">Shell estilo 95; NT para empresas.</div></td>
-        <td class="os"><span class="tag l">Linux 2.0</span><div class="note">SMP, redes mejoradas.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows NT 4.0</span></div>
+              <div class="note">Shell estilo 95; enfoque empresarial. :contentReference[oaicite:8]{index=8}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 2.0</span></div>
+              <div class="note">SMP y redes mejoradas. :contentReference[oaicite:9]{index=9}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="1998">
         <th>1998</th>
-        <td class="os"><span class="tag w">Windows 98</span><div class="note">Soporte USB mejorado; 98 SE (1999).</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 98</span></div>
+              <div class="note">USB mejorado; 98 SE (1999). :contentReference[oaicite:10]{index=10}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2000">
         <th>2000</th>
-        <td class="os"><span class="tag w">Windows 2000</span><div class="note">NT 5.0; profesional/servidor.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 2000</span></div>
+              <div class="note">NT 5.0 profesional/servidor. :contentReference[oaicite:11]{index=11}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2001">
         <th>2001</th>
-        <td class="os"><span class="tag w">Windows XP</span><div class="note">Base NT al consumidor; UI Luna.</div></td>
-        <td class="os"><span class="tag l">Linux 2.4</span><div class="note">USB 2.0, mejor escalabilidad.</div></td>
-        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows XP</span></div>
+              <div class="note">Base NT al consumidor; UI Luna. :contentReference[oaicite:12]{index=12}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 2.4</span></div>
+              <div class="note">USB 2.0; más escalabilidad. :contentReference[oaicite:13]{index=13}</div>
+            </div>
+          </div>
+        </td>
       </tr>
 
       <!-- 2007–2013 -->
       <tr data-year="2007">
         <th>2007</th>
-        <td class="os"><span class="tag w">Windows Vista</span><div class="note">Aero, DWM, UAC.</div></td>
-        <td class="os"><div class="note">Kernel 2.6 madura en desktop.</div></td>
-        <td class="os"><span class="tag i">iPhone OS 1.0</span><div class="note">Lanzamiento del iPhone (jun-2007).</div></td>
-        <td class="os"><div class="note">Android beta pública a finales de 2007.</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows Vista</span></div>
+              <div class="note">Aero, DWM, UAC. :contentReference[oaicite:14]{index=14}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot di"></span>iOS — <span class="tag i">iPhone OS 1.0</span></div>
+              <div class="note">Lanzamiento del iPhone (jun-2007). :contentReference[oaicite:15]{index=15}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot da"></span>Android</div>
+              <div class="note">Beta pública a finales de 2007 (SDK 12-nov-2007). :contentReference[oaicite:16]{index=16}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2008">
         <th>2008</th>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iPhone OS 2: App Store.</div></td>
-        <td class="os"><span class="tag a">Android 1.0</span><div class="note">Primer lanzamiento comercial (sep-2008).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot di"></span>iOS — <span class="tag i">iPhone OS 2</span></div>
+              <div class="note">App Store. :contentReference[oaicite:17]{index=17}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot da"></span>Android — <span class="tag a">Android 1.0</span></div>
+              <div class="note">Primer lanzamiento comercial (23-sep-2008). :contentReference[oaicite:18]{index=18}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2009">
         <th>2009</th>
-        <td class="os"><span class="tag w">Windows 7</span><div class="note">Rendimiento y UI refinada.</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iPhone OS 3: copiar/pegar, MMS.</div></td>
-        <td class="os"><div class="note">Android 1.5–2.0 (Cupcake/Eclair).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry">
+              <div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 7</span></div>
+              <div class="note">Rendimiento y UI refinada. :contentReference[oaicite:19]{index=19}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot di"></span>iOS — <span class="tag i">iPhone OS 3</span></div>
+              <div class="note">Copiar/pegar, MMS. :contentReference[oaicite:20]{index=20}</div>
+            </div>
+            <div class="entry">
+              <div class="head"><span class="dot da"></span>Android</div>
+              <div class="note">1.5 Cupcake → 2.0 Eclair. :contentReference[oaicite:21]{index=21}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2010">
         <th>2010</th>
-        <td class="os"><div class="note">Windows 7 domina el escritorio.</div></td>
-        <td class="os"><div class="note">Kernel 2.6/3.x: auge en servidor.</div></td>
-        <td class="os"><span class="tag i">iOS 4</span><div class="note">Cambio de nombre a “iOS”; multitarea.</div></td>
-        <td class="os"><div class="note">Android 2.2–2.3 (Froyo/Gingerbread).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 4</span></div>
+              <div class="note">Cambia el nombre a “iOS”; multitarea. :contentReference[oaicite:22]{index=22}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android</div>
+              <div class="note">2.2 Froyo / 2.3 Gingerbread; 3.0 Honeycomb (tablets). :contentReference[oaicite:23]{index=23}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2011">
         <th>2011</th>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><span class="tag l">Linux 3.0</span><div class="note">Nuevo esquema de versiones.</div></td>
-        <td class="os"><div class="note">iOS 5: iCloud, iMessage.</div></td>
-        <td class="os"><div class="note">Android 3.0 (Honeycomb, tablets).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 3.0</span></div>
+              <div class="note">Nuevo esquema de versiones. :contentReference[oaicite:24]{index=24}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 5</span></div>
+              <div class="note">iCloud, iMessage. :contentReference[oaicite:25]{index=25}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2012">
         <th>2012</th>
-        <td class="os"><span class="tag w">Windows 8</span><div class="note">UI “Metro”, tienda de apps.</div></td>
-        <td class="os"><div class="note">Kernel 3.x se consolida.</div></td>
-        <td class="os"><div class="note">iOS 6: Passbook, Apple Maps.</div></td>
-        <td class="os"><div class="note">Android 4.0/4.1 (ICS/Jelly Bean).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 8</span></div>
+              <div class="note">UI “Metro”, tienda de apps. :contentReference[oaicite:26]{index=26}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android</div>
+              <div class="note">4.0 ICS / 4.1 Jelly Bean. :contentReference[oaicite:27]{index=27}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2013">
         <th>2013</th>
-        <td class="os"><span class="tag w">Windows 8.1</span><div class="note">Mejoras de usabilidad.</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iOS 7: rediseño plano, 64-bit.</div></td>
-        <td class="os"><div class="note">Android 4.4 (KitKat).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 8.1</span></div>
+              <div class="note">Mejoras de usabilidad. :contentReference[oaicite:28]{index=28}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 7</span></div>
+              <div class="note">Rediseño plano; 64-bit. :contentReference[oaicite:29]{index=29}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">4.4 KitKat</span></div>
+              <div class="note">Optimización general. :contentReference[oaicite:30]{index=30}</div>
+            </div>
+          </div>
+        </td>
       </tr>
 
       <!-- 2014–2020 -->
       <tr data-year="2014"><th>2014</th>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iOS 8: HealthKit, extensiones.</div></td>
-        <td class="os"><div class="note">Android 5.0 (Lollipop, Material).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 8</span></div>
+              <div class="note">HealthKit, extensiones. :contentReference[oaicite:31]{index=31}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">5.0 Lollipop</span></div>
+              <div class="note">Material Design. :contentReference[oaicite:32]{index=32}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2015"><th>2015</th>
-        <td class="os"><span class="tag w">Windows 10</span><div class="note">“Windows as a Service”.</div></td>
-        <td class="os"><span class="tag l">Linux 4.0</span><div class="note">Actualizaciones “live patch”.</div></td>
-        <td class="os"><div class="note">iOS 9: eficiencia, Proactive.</div></td>
-        <td class="os"><div class="note">Android 6.0 (Marshmallow).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 10</span></div>
+              <div class="note">“Windows as a Service”. :contentReference[oaicite:33]{index=33}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 4.0</span></div>
+              <div class="note">“Live patching”. :contentReference[oaicite:34]{index=34}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">6.0 Marshmallow</span></div>
+              <div class="note">Permisos granulares, Doze. :contentReference[oaicite:35]{index=35}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2016"><th>2016</th>
-        <td class="os"><div class="note">Windows 10 (Anniversary).</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iOS 10: widgets, SiriKit.</div></td>
-        <td class="os"><div class="note">Android 7.0 (Nougat).</div></td>
-      </tr>
-      <tr data-year="2017"><th>2017</th>
-        <td class="os"><div class="note">Windows 10 (Creators).</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iOS 11: ARKit, Files.</div></td>
-        <td class="os"><div class="note">Android 8.0 (Oreo).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 10</span></div>
+              <div class="note">Widgets, SiriKit. :contentReference[oaicite:36]{index=36}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">7.0 Nougat</span></div>
+              <div class="note">Multiventana, Doze mejorado. :contentReference[oaicite:37]{index=37}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2018"><th>2018</th>
-        <td class="os"><div class="note">Windows 10 (1803/1809).</div></td>
-        <td class="os"><div class="note">—</div></td>
-        <td class="os"><div class="note">iOS 12: rendimiento, Screen Time.</div></td>
-        <td class="os"><div class="note">Android 9 (Pie).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 12</span></div>
+              <div class="note">Rendimiento; Screen Time. :contentReference[oaicite:38]{index=38}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">9 Pie</span></div>
+              <div class="note">Gestos; bienestar digital. :contentReference[oaicite:39]{index=39}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2019"><th>2019</th>
-        <td class="os"><div class="note">Windows 10 (1903/1909).</div></td>
-        <td class="os"><span class="tag l">Linux 5.0</span><div class="note">Nuevos drivers, energía.</div></td>
-        <td class="os"><div class="note">iOS 13: modo oscuro.</div></td>
-        <td class="os"><div class="note">Android 10 (gestos, privacidad).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 5.0</span></div>
+              <div class="note">Drivers y gestión de energía. :contentReference[oaicite:40]{index=40}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 13</span></div>
+              <div class="note">Modo oscuro. :contentReference[oaicite:41]{index=41}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">10</span></div>
+              <div class="note">Navegación por gestos; privacidad. :contentReference[oaicite:42]{index=42}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2020"><th>2020</th>
-        <td class="os"><div class="note">Windows 10 (2004/20H2).</div></td>
-        <td class="os"><div class="note">Kernel 5.x ampliamente adoptado.</div></td>
-        <td class="os"><div class="note">iOS 14: widgets en pantalla.</div></td>
-        <td class="os"><div class="note">Android 11 (notifs, burbujas).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 14</span></div>
+              <div class="note">Widgets en pantalla; App Library. :contentReference[oaicite:43]{index=43}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">11</span></div>
+              <div class="note">Burbujas; controles de dispositivos. :contentReference[oaicite:44]{index=44}</div>
+            </div>
+          </div>
+        </td>
       </tr>
 
       <!-- 2021–2025 -->
       <tr data-year="2021"><th>2021</th>
-        <td class="os"><span class="tag w">Windows 11</span><div class="note">Lanzamiento 5-oct-2021.</div></td>
-        <td class="os"><div class="note">Kernel 5.x/6.x; ARM/RISC-V.</div></td>
-        <td class="os"><div class="note">iOS 15: Focus, Mail Privacy.</div></td>
-        <td class="os"><div class="note">Android 12 (“Material You”).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dw"></span>Windows — <span class="tag w">Windows 11</span></div>
+              <div class="note">Lanzamiento 5-oct-2021. :contentReference[oaicite:45]{index=45}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 15</span></div>
+              <div class="note">Focus; Mail Privacy. :contentReference[oaicite:46]{index=46}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">12</span></div>
+              <div class="note">Material You. :contentReference[oaicite:47]{index=47}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2022"><th>2022</th>
-        <td class="os"><div class="note">Windows 11 22H2.</div></td>
-        <td class="os"><span class="tag l">Linux 6.0</span><div class="note">Nueva rama mayor.</div></td>
-        <td class="os"><div class="note">iOS 16: Passkeys, edición de iMessage.</div></td>
-        <td class="os"><div class="note">Android 13 (permisos fotos).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot dl"></span>Linux — <span class="tag l">Linux 6.0</span></div>
+              <div class="note">Nueva rama mayor. :contentReference[oaicite:48]{index=48}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 16</span></div>
+              <div class="note">Pantalla de bloqueo personalizable; Passkeys. :contentReference[oaicite:49]{index=49}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">13</span></div>
+              <div class="note">Permisos de fotos y notificaciones. :contentReference[oaicite:50]{index=50}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2023"><th>2023</th>
-        <td class="os"><div class="note">Windows 11 23H2.</div></td>
-        <td class="os"><div class="note">Kernel 6.x continúa.</div></td>
-        <td class="os"><div class="note">iOS 17: NameDrop, Journal.</div></td>
-        <td class="os"><div class="note">Android 14 (accesibilidad, privacidad).</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 17</span></div>
+              <div class="note">NameDrop; Journal. :contentReference[oaicite:51]{index=51}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">14</span></div>
+              <div class="note">Accesibilidad y privacidad. :contentReference[oaicite:52]{index=52}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2024"><th>2024</th>
-        <td class="os"><div class="note">Windows 11 24H2.</div></td>
-        <td class="os"><div class="note">Kernel 6.12 LTS.</div></td>
-        <td class="os"><div class="note">iOS 18: widgets interactivos.</div></td>
-        <td class="os"><div class="note">Android 15.</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 18</span></div>
+              <div class="note">Más personalización de la pantalla de inicio. :contentReference[oaicite:53]{index=53}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">15</span></div>
+              <div class="note">Mejoras de privacidad/estabilidad. :contentReference[oaicite:54]{index=54}</div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tr data-year="2025"><th>2025</th>
-        <td class="os"><div class="note">Windows 11 (feature update anual).</div></td>
-        <td class="os"><span class="tag l">Linux 6.16–6.17</span><div class="note">Ramas estable/mainline.</div></td>
-        <td class="os"><span class="tag i">iOS 26</span><div class="note">Nuevo diseño + Apple Intelligence (sep-2025).</div></td>
-        <td class="os"><span class="tag a">Android 16</span><div class="note">Ciclo 2025 con previews/betas.</div></td>
+        <td>
+          <div class="stack">
+            <div class="entry"><div class="head"><span class="dot di"></span>iOS — <span class="tag i">iOS 26</span></div>
+              <div class="note">Gran rediseño “Liquid Glass” y nuevas funciones de IA (sept-2025). :contentReference[oaicite:55]{index=55}</div>
+            </div>
+            <div class="entry"><div class="head"><span class="dot da"></span>Android — <span class="tag a">16</span></div>
+              <div class="note">Ciclo 2025 (previews/betas y estable). :contentReference[oaicite:56]{index=56}</div>
+            </div>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<footer>
-  Hecho por Zhephyr ✨ — Actualizado a septiembre de 2025.
-</footer>
 
 <script>
   const $ = (s, c=document)=>c.querySelector(s);
@@ -326,3 +545,4 @@
 </script>
 </body>
 </html>
+
