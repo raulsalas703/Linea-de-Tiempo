@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evolución de los Sistemas Operativos</title>
+<style>
+  :root{
+    --bg:#0b0e13; --card:#121826; --ink:#e8eefc; --muted:#9fb0d1;
+    --accent:#6aa5ff; --accent2:#7ef2c3; --grid:#1c2538;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:system-ui,"Segoe UI",Roboto,Arial;
+    background: radial-gradient(1100px 800px at 15% -20%, #182035 0%, #0b0e13 60%) no-repeat var(--bg);
+    color:var(--ink); line-height:1.45;
+  }
+  header{padding:clamp(20px,4vw,48px); text-align:center}
+  h1{
+    margin:.2rem 0 .4rem; font-size:clamp(1.6rem,4vw,2.4rem);
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent
+  }
+  .sub{color:var(--muted)}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,3vw,24px) 64px}
+
+  /* Controles */
+  .controls{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 14px}
+  input[type="search"], select, button{
+    background:var(--card); border:1px solid #22304b; color:var(--ink);
+    padding:10px 12px; border-radius:12px;
+  }
+  button{cursor:pointer; font-weight:600}
+
+  /* Tabla */
+  .table{width:100%; border-collapse:collapse; background:var(--card);
+    border:1px solid #22304b; border-radius:16px; overflow:hidden}
+  thead th{
+    position:sticky; top:0; z-index:2;
+    background:#0f1524; color:#dbe7ff; font-weight:700; text-align:left;
+    padding:14px 16px; border-bottom:1px solid #22304b; white-space:nowrap
+  }
+  tbody td, tbody th{padding:14px 16px; border-top:1px solid var(--grid); vertical-align:top}
+  tbody tr:nth-child(odd){background:#121a2b}
+  tbody tr:hover{background:#162039}
+  tbody th{width:90px; color:#cde0ff; font-weight:800}
+
+  .os{display:grid; gap:6px}
+  .note{color:var(--muted); font-size:.92rem}
+  .tag{display:inline-block; padding:2px 8px; border-radius:999px; font-size:.78rem; font-weight:700; color:#0b0e13; border:1px solid rgba(255,255,255,.12)}
+  .w{background:#9ad0ff} .l{background:#86f7c8} .i{background:#ffd28a} .a{background:#c7a2ff}
+
+  footer{text-align:center; color:#6f82a7; font-size:.88rem; margin:26px 0 48px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Evolución de los Sistemas Operativos</h1>
+  <div class="sub">Línea de tiempo comparativa (Windows, Linux, iOS, Android)</div>
+</header>
+
+<div class="wrap">
+  <!-- Controles -->
+  <div class="controls">
+    <input id="q" type="search" placeholder="Buscar (ej. 'Windows 7', 'kernel 5.0', 'iOS 12', 'Android 9 Pie')">
+    <select id="sort">
+      <option value="asc">Ordenar por año ↑</option>
+      <option value="desc">Ordenar por año ↓</option>
+    </select>
+    <button id="reset">Limpiar</button>
+  </div>
+
+  <!-- Tabla -->
+  <table class="table" id="timeline">
+    <thead>
+      <tr><th>Año</th><th>Windows</th><th>Linux (kernel)</th><th>iOS</th><th>Android</th></tr>
+    </thead>
+    <tbody>
+      <!-- 1980s–1990s -->
+      <tr data-year="1985">
+        <th>1985</th>
+        <td class="os"><span class="tag w">Windows 1.0</span><div class="note">Primer Windows (20-nov-1985).</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1987">
+        <th>1987</th>
+        <td class="os"><span class="tag w">Windows 2.0</span><div class="note">Ventanas superpuestas, mejoras UI.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1990">
+        <th>1990</th>
+        <td class="os"><span class="tag w">Windows 3.0</span><div class="note">Populariza la GUI, mejor memoria.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1991">
+        <th>1991</th>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><span class="tag l">Linux 0.01</span><div class="note">Primera publicación (sept-1991).</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1992">
+        <th>1992</th>
+        <td class="os"><span class="tag w">Windows 3.1</span><div class="note">TrueType, WfW 3.11 (1993).</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1993">
+        <th>1993</th>
+        <td class="os"><span class="tag w">Windows NT 3.1</span><div class="note">Arranca la línea NT (32-bit).</div></td>
+        <td class="os"><div class="note">Distros tempranas: Slackware/Debian.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1994">
+        <th>1994</th>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><span class="tag l">Linux 1.0</span><div class="note">Primer kernel estable.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1995">
+        <th>1995</th>
+        <td class="os"><span class="tag w">Windows 95</span><div class="note">Menú Inicio, barra de tareas, PnP.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1996">
+        <th>1996</th>
+        <td class="os"><span class="tag w">Windows NT 4.0</span><div class="note">Shell estilo 95; NT para empresas.</div></td>
+        <td class="os"><span class="tag l">Linux 2.0</span><div class="note">SMP, redes mejoradas.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="1998">
+        <th>1998</th>
+        <td class="os"><span class="tag w">Windows 98</span><div class="note">Soporte USB mejorado; 98 SE (1999).</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="2000">
+        <th>2000</th>
+        <td class="os"><span class="tag w">Windows 2000</span><div class="note">NT 5.0; profesional/servidor.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+      <tr data-year="2001">
+        <th>2001</th>
+        <td class="os"><span class="tag w">Windows XP</span><div class="note">Base NT al consumidor; UI Luna.</div></td>
+        <td class="os"><span class="tag l">Linux 2.4</span><div class="note">USB 2.0, mejor escalabilidad.</div></td>
+        <td class="os"><div class="note">—</div></td><td class="os"><div class="note">—</div></td>
+      </tr>
+
+      <!-- 2007–2013 -->
+      <tr data-year="2007">
+        <th>2007</th>
+        <td class="os"><span class="tag w">Windows Vista</span><div class="note">Aero, DWM, UAC.</div></td>
+        <td class="os"><div class="note">Kernel 2.6 madura en desktop.</div></td>
+        <td class="os"><span class="tag i">iPhone OS 1.0</span><div class="note">Lanzamiento del iPhone (jun-2007).</div></td>
+        <td class="os"><div class="note">Android beta pública a finales de 2007.</div></td>
+      </tr>
+      <tr data-year="2008">
+        <th>2008</th>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iPhone OS 2: App Store.</div></td>
+        <td class="os"><span class="tag a">Android 1.0</span><div class="note">Primer lanzamiento comercial (sep-2008).</div></td>
+      </tr>
+      <tr data-year="2009">
+        <th>2009</th>
+        <td class="os"><span class="tag w">Windows 7</span><div class="note">Rendimiento y UI refinada.</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iPhone OS 3: copiar/pegar, MMS.</div></td>
+        <td class="os"><div class="note">Android 1.5–2.0 (Cupcake/Eclair).</div></td>
+      </tr>
+      <tr data-year="2010">
+        <th>2010</th>
+        <td class="os"><div class="note">Windows 7 domina el escritorio.</div></td>
+        <td class="os"><div class="note">Kernel 2.6/3.x: auge en servidor.</div></td>
+        <td class="os"><span class="tag i">iOS 4</span><div class="note">Cambio de nombre a “iOS”; multitarea.</div></td>
+        <td class="os"><div class="note">Android 2.2–2.3 (Froyo/Gingerbread).</div></td>
+      </tr>
+      <tr data-year="2011">
+        <th>2011</th>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><span class="tag l">Linux 3.0</span><div class="note">Nuevo esquema de versiones.</div></td>
+        <td class="os"><div class="note">iOS 5: iCloud, iMessage.</div></td>
+        <td class="os"><div class="note">Android 3.0 (Honeycomb, tablets).</div></td>
+      </tr>
+      <tr data-year="2012">
+        <th>2012</th>
+        <td class="os"><span class="tag w">Windows 8</span><div class="note">UI “Metro”, tienda de apps.</div></td>
+        <td class="os"><div class="note">Kernel 3.x se consolida.</div></td>
+        <td class="os"><div class="note">iOS 6: Passbook, Apple Maps.</div></td>
+        <td class="os"><div class="note">Android 4.0/4.1 (ICS/Jelly Bean).</div></td>
+      </tr>
+      <tr data-year="2013">
+        <th>2013</th>
+        <td class="os"><span class="tag w">Windows 8.1</span><div class="note">Mejoras de usabilidad.</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iOS 7: rediseño plano, 64-bit.</div></td>
+        <td class="os"><div class="note">Android 4.4 (KitKat).</div></td>
+      </tr>
+
+      <!-- 2014–2020 -->
+      <tr data-year="2014"><th>2014</th>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iOS 8: HealthKit, extensiones.</div></td>
+        <td class="os"><div class="note">Android 5.0 (Lollipop, Material).</div></td>
+      </tr>
+      <tr data-year="2015"><th>2015</th>
+        <td class="os"><span class="tag w">Windows 10</span><div class="note">“Windows as a Service”.</div></td>
+        <td class="os"><span class="tag l">Linux 4.0</span><div class="note">Actualizaciones “live patch”.</div></td>
+        <td class="os"><div class="note">iOS 9: eficiencia, Proactive.</div></td>
+        <td class="os"><div class="note">Android 6.0 (Marshmallow).</div></td>
+      </tr>
+      <tr data-year="2016"><th>2016</th>
+        <td class="os"><div class="note">Windows 10 (Anniversary).</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iOS 10: widgets, SiriKit.</div></td>
+        <td class="os"><div class="note">Android 7.0 (Nougat).</div></td>
+      </tr>
+      <tr data-year="2017"><th>2017</th>
+        <td class="os"><div class="note">Windows 10 (Creators).</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iOS 11: ARKit, Files.</div></td>
+        <td class="os"><div class="note">Android 8.0 (Oreo).</div></td>
+      </tr>
+      <tr data-year="2018"><th>2018</th>
+        <td class="os"><div class="note">Windows 10 (1803/1809).</div></td>
+        <td class="os"><div class="note">—</div></td>
+        <td class="os"><div class="note">iOS 12: rendimiento, Screen Time.</div></td>
+        <td class="os"><div class="note">Android 9 (Pie).</div></td>
+      </tr>
+      <tr data-year="2019"><th>2019</th>
+        <td class="os"><div class="note">Windows 10 (1903/1909).</div></td>
+        <td class="os"><span class="tag l">Linux 5.0</span><div class="note">Nuevos drivers, energía.</div></td>
+        <td class="os"><div class="note">iOS 13: modo oscuro.</div></td>
+        <td class="os"><div class="note">Android 10 (gestos, privacidad).</div></td>
+      </tr>
+      <tr data-year="2020"><th>2020</th>
+        <td class="os"><div class="note">Windows 10 (2004/20H2).</div></td>
+        <td class="os"><div class="note">Kernel 5.x ampliamente adoptado.</div></td>
+        <td class="os"><div class="note">iOS 14: widgets en pantalla.</div></td>
+        <td class="os"><div class="note">Android 11 (notifs, burbujas).</div></td>
+      </tr>
+
+      <!-- 2021–2025 -->
+      <tr data-year="2021"><th>2021</th>
+        <td class="os"><span class="tag w">Windows 11</span><div class="note">Lanzamiento 5-oct-2021.</div></td>
+        <td class="os"><div class="note">Kernel 5.x/6.x; ARM/RISC-V.</div></td>
+        <td class="os"><div class="note">iOS 15: Focus, Mail Privacy.</div></td>
+        <td class="os"><div class="note">Android 12 (“Material You”).</div></td>
+      </tr>
+      <tr data-year="2022"><th>2022</th>
+        <td class="os"><div class="note">Windows 11 22H2.</div></td>
+        <td class="os"><span class="tag l">Linux 6.0</span><div class="note">Nueva rama mayor.</div></td>
+        <td class="os"><div class="note">iOS 16: Passkeys, edición de iMessage.</div></td>
+        <td class="os"><div class="note">Android 13 (permisos fotos).</div></td>
+      </tr>
+      <tr data-year="2023"><th>2023</th>
+        <td class="os"><div class="note">Windows 11 23H2.</div></td>
+        <td class="os"><div class="note">Kernel 6.x continúa.</div></td>
+        <td class="os"><div class="note">iOS 17: NameDrop, Journal.</div></td>
+        <td class="os"><div class="note">Android 14 (accesibilidad, privacidad).</div></td>
+      </tr>
+      <tr data-year="2024"><th>2024</th>
+        <td class="os"><div class="note">Windows 11 24H2.</div></td>
+        <td class="os"><div class="note">Kernel 6.12 LTS.</div></td>
+        <td class="os"><div class="note">iOS 18: widgets interactivos.</div></td>
+        <td class="os"><div class="note">Android 15.</div></td>
+      </tr>
+      <tr data-year="2025"><th>2025</th>
+        <td class="os"><div class="note">Windows 11 (feature update anual).</div></td>
+        <td class="os"><span class="tag l">Linux 6.16–6.17</span><div class="note">Ramas estable/mainline.</div></td>
+        <td class="os"><span class="tag i">iOS 26</span><div class="note">Nuevo diseño + Apple Intelligence (sep-2025).</div></td>
+        <td class="os"><span class="tag a">Android 16</span><div class="note">Ciclo 2025 con previews/betas.</div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  Hecho por Zhephyr ✨ — Actualizado a septiembre de 2025.
+</footer>
+
+<script>
+  const $ = (s, c=document)=>c.querySelector(s);
+  const $$ = (s, c=document)=>Array.from(c.querySelectorAll(s));
+  const tbody = $("#timeline tbody");
+  const q = $("#q");
+  const sortSel = $("#sort");
+  const reset = $("#reset");
+
+  const state = { text:"", order:"asc" };
+
+  function applySearch(){
+    const rows = $$("tr", tbody);
+    rows.forEach(row=>{
+      const text = row.innerText.toLowerCase();
+      row.style.display = state.text ? (text.includes(state.text) ? "" : "none") : "";
+    });
+  }
+
+  function sortRows(){
+    const rows = $$("tr", tbody);
+    rows.sort((a,b)=>{
+      const ya = parseInt(a.getAttribute("data-year").slice(0,4),10);
+      const yb = parseInt(b.getAttribute("data-year").slice(0,4),10);
+      return state.order === "asc" ? ya - yb : yb - ya;
+    });
+    rows.forEach(r=>tbody.appendChild(r));
+  }
+
+  q.addEventListener("input", e=>{
+    state.text = e.target.value.trim().toLowerCase();
+    applySearch();
+  });
+
+  sortSel.addEventListener("change", e=>{
+    state.order = e.target.value;
+    sortRows();
+  });
+
+  reset.addEventListener("click", ()=>{
+    state.text = ""; q.value="";
+    state.order = "asc"; sortSel.value="asc";
+    sortRows(); applySearch();
+  });
+
+  // Inicial
+  sortRows(); applySearch();
+</script>
+</body>
+</html>
